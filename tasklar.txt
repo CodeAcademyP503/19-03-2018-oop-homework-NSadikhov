@@ -1,0 +1,222 @@
+Sual 1.
+continue ve break arasindaki ferq ondan ibaretdiki... loopda break verildikde  emri break; olan hisseye kimi eleyir ve dayanir, ancaq continue da ise emri davam etdirir.
+Meselen:
+for (int i = 0; i < 10; i++) 
+{
+    if (i == 0) 
+    {
+        break;
+    }				break islenen loopda ekranda hecne gorsenmeyecek, cunki break-e kimi davam edecek ve dayanacaq.
+
+    Console.WriteLine(i);
+}
+for (int i = 0; i < 10; i++) 
+{
+    if (i == 0) 
+    {
+        continue;		continue islenen loopda ise ekranda 1-den 9-a qeder 9-da daxil olmaqla yazacaq, cunki burada continue verilmisdir, ona gore de emri davam etdirecek.		
+    }
+
+    Console.WriteLine(i);
+}
+
+Sual 2.
+mueyyen olunmus obyektin, yeni class-in ozu demekdir... meselen:
+class Book
+{
+    public string kitab;
+
+    public Book(string kitab)
+    {
+	this.kitab=kitab;
+    }
+}
+bu o demekdir ki, this ifadesiylen 2 eyni adli property-den istifade elemek olar ve this ifadesi static methodu daxilinde istifade oluna bilmez.
+
+
+Sual 3.
+String class-di, string keyword-du. Her ikisiylende deyisenin tipini mueyyen elemek olur.
+misal olaraq: 
+string Name = "Ferid";--\
+String Name = "Ferid";--/ eyni netice elde olunur...
+
+
+Sual 4.
+Equals(),GetHashCode(),GetType(),ToString() methodlari Object Class-inin methodlaridi.
+Equals()--> Gösterilen obyektin mövcud obyekte beraber olub olmadigini müeyyen edir.
+Misal olaraq:
+string a = "a" + 1;
+string b = "a" + 1;
+if (a.Equals(b))
+   	{
+            Console.WriteLine("a.Equals(b) = true");
+        }
+
+if (b.Equals(a))
+        {
+            Console.WriteLine("b.Equals(a) = true");
+        }
+
+GetHashCode()--> Varsayilan hash funksiyasi kimi xidmet edir..NET Framework-de hashing tetbiq edir.
+Misal olaraq:
+public override unsafe int GetHashCode()
+{
+    fixed (char* str = this)
+    {
+        char* chPtr = str;
+        int num = 352654597;
+        int num2 = num;
+        int* numPtr = (int*)chPtr;
+        for (int i = this.Length; i > 0; i -= 4)
+        {
+            num = (((num << 5) + num) + (num >> 27)) ^ numPtr[0];
+            if (i <= 2)
+            {
+                break;
+            }
+            num2 = (((num2 << 5) + num2) + (num2 >> 27)) ^ numPtr[1];
+            numPtr += 2;
+        }
+        return (num + (num2 * 1566083941));
+    }
+}
+
+GetType()--> Nümunenin növünü elde elemek ucun istifade olunur.
+Misal olaraq:
+class A
+{
+}
+
+class B : A
+{
+}
+
+class C : B
+{
+}
+
+class Program
+{
+    static void Main()
+    {
+        A a1 = new A();
+        A a2 = new B();
+        A a3 = new C();
+
+        Console.WriteLine(a1.GetType());
+        Console.WriteLine(a2.GetType());
+        Console.WriteLine(a3.GetType());
+    }
+}
+
+ToString()--> Bu üsul virtualdir. Bir simli nümayendeliyi qaytarir. Biz effektiv olma üsulu üçün xüsusi növlere ToString-i legv etmemiz lazimdir.
+Misal olaraq:
+class Str
+{
+    int _a;
+    int _b;
+
+    public Str(int a, int b)
+    {
+        _a = a;
+        _b = b;
+    }
+
+    public override string ToString()
+    {
+        return string.Format("[{0}, {1}]", _a, _b);
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        Str str = new Str(1, 2);
+        Console.WriteLine(str);
+    }
+}
+
+
+
+Sual 5.
+Static public-le birge islenir. Class uzerinden deyer verilir. Obyekte deyilde class-a aid olur. Lakin public ile verilmis deyer obyekte aid olur.
+Misal olaraq: 
+class Reqem
+{
+    public static int number;
+    public int eded;
+}
+eded parametrinden Main methodunda istifade ede bilsekde, numberdan istifade ede bilmirik. Sebebse static olmasidi.
+Static keyword-u Main methodunda ise public-siz islenir.
+static void Main(string[] args)
+{
+    Console.Read();
+}
+
+
+
+Sual 6.
+class Program
+    {
+        static void Main(string[] args)
+        {
+            var admin = new Admin();
+            admin.duzelis_et = "";
+            admin.oxu = "";
+		
+            var user = new User();
+            user.oxu = "";
+        }
+    }
+    class User
+    {
+        public string oxu;
+        
+    }
+    class Admin:User
+    {
+        public string duzelis_et;
+
+    }
+Burada admin hem duzelis ede, hemde oxuya bildiyi teqdirde... user sadece oxuya biler. yeni admin user oxunu miras alib.
+
+Sual 7.
+Bir çox proqramlasdirma dilleri default / optional parametrler adli bir texnikani destekleyir. Programci bir ve ya bir neçe parametrleri istege bagli olaraq, onlara bir default deyer vererek etmeye imkan verir. 
+Meselen, bir ve ya daha çox parametr elave olunmasini teleb eden mövcud funksiyaya funksionalliq el ve etmek isteye bilersiniz. 
+Bunu etmekle, bu funksiyani çagirdiginiz mövcud kodu qirmaq olar, çünki artiq onlar lazimi miqdarda parametrler keçmeyecekdir. 
+Bunun etrafinda islemek üçün yeni elave parametrleri istege bagli olaraq teyin ede v? onlara parametrleri elave etmezden evvel kodun nece islediyine uygun bir deyer vere bilersiniz.
+Misal olaraq: 
+class Cebr
+{
+    public static int Cem(int reqem1, int reqem2)
+    {
+        return Cem(reqem1, reqem2, 0);
+    }
+
+    public static int Cem(int reqem1, int reqem2, int reqem3)
+    {
+        return Cem(reqem1, reqem2, reqem3, 0);
+    }
+
+    public static int Cem(int reqem1, int reqem2, int reqem3, int reqem4)
+    {
+        return reqem1 + reqem2 + reqem3 + reqem4;
+    }
+}
+
+ 
+Sual 8.
+Property sadece class-a aid bir seydir. Benzer cehet data tipinin mueyyen olunmasidi. Yeni ki, public string Name;-->bu burada Name-in string tipinde oldugunu bildirir, hemcinin string Name=Console.ReadLine();-->bu da string tipinde bir variable-in oldugunu gosterir.
+Variable proqramin idare ede bileceyi bir saxlama sahesine verilen addir. C#-da her bir variable-in variable yaddasinin olcusunu ve yerlesdirilmesini mueyyen eden xususi bir novu vardir, bu yaddas daxilinde saxlanila bilen deyerler ucundur ve deyisene tetbiq edile bilen emeliyyatlar destidir.
+Property-nin xüsusiyyetleri sinif üzvleri, quruluslar ve interfeyslerdir. Bir sinifde ve ya strukturdaki üzv deyisenler ve ya üsullara "Saheler" deyilir. Properties xususiyyetleri bir sahenin uzadilmasidir ve eyni sintaksisden istifade olunur. 
+Xüsusi sahelerin deyerlerini oxumaq, yazmaq ve ya manipulyasiya etmek üçün istifadeçilerden istifade edirler.
+
+
+Sual 9.
+Notepad++ proqramiylanda islemek olar, lakin notepad++-len muqayisede visual studioda sehvlerin tapilmasi ve onlarin helli meselesi daha asandi. SharpDevelop, MonoDevelop ve Microsoft azure proqramlarinda da hemcinin c# islemek mumkundu.
+
+
+Sual 10.
+Tetilde login panelli sinif sistemine aid bir CRUD yazdim. Birdeki indiye kimi kecilenleri tekrar eledim...
+
